@@ -1,6 +1,10 @@
 <?php
-// Paso 1: obtener el playbackURL desde la página de la12hd
-$canalUrl = "https://la12hd.com/vivo/canales.php?stream=dsports";
+if (!isset($_GET['url']) || empty($_GET['url'])) {
+    die("Canal no especificado");
+}
+
+$canalID = preg_replace('/[^a-zA-Z0-9_-]/', '', $_GET['url']);
+$canalUrl = "https://la12hd.com/vivo/canales.php?stream=" . $canalID;
 
 $options = [
     "http" => [
@@ -19,26 +23,14 @@ if (!$response || !preg_match('/var\s+playbackURL\s*=\s*"([^"]+)"/', $response, 
 }
 
 $playbackURL = $match[1];
-?>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Reproductor ESPN Premium</title>
-</head>
-<body style="margin:0;background:black;display:flex;align-items:center;justify-content:center;height:100vh;">
-    <video id="video" controls autoplay width="100%" height="auto" style="max-width: 900px;"></video>
 
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <script>
-    const video = document.getElementById('video');
-    const hls = new Hls();
-    const url = "proxy.php?url=<?= urlencode($playbackURL) ?>";
-    hls.loadSource(url);
-    hls.attachMedia(video);
-    hls.on(Hls.Events.MANIFEST_PARSED, function () {
-        video.play();
-    });
-    </script>
+echo '<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body>
+<script>
+var playbackURL = "' . $playbackURL . '";
+console.log("PlaybackURL:", playbackURL);
+</script>
 </body>
-</html>
+</html>';
