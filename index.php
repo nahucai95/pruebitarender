@@ -23,14 +23,14 @@ if (!$response || !preg_match('/var\s+playbackURL\s*=\s*"([^"]+)"/', $response, 
 }
 
 $playbackURL = $match[1];
+$proxyURL = 'proxy.php?url=' . urlencode($playbackURL);
 
+// Mostramos el enlace en pantalla
 echo '<!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"></head>
-<body>
-<script>
-var playbackURL = "' . $playbackURL . '";
-console.log("PlaybackURL:", playbackURL);
-</script>
+<head><meta charset="UTF-8"><title>Enlace Proxy</title></head>
+<body style="font-family:Arial;padding:20px;">
+    <p>Enlace listo para usar en el reproductor:</p>
+    <a href="' . htmlspecialchars($proxyURL) . '" target="_blank">' . htmlspecialchars($proxyURL) . '</a>
 </body>
 </html>';
