@@ -23,7 +23,7 @@ if (!$response || !preg_match('/var\s+playbackURL\s*=\s*"([^"]+)"/', $response, 
 }
 
 $playbackURL = $match[1];
-$proxyURL = 'proxy.php?url=' . urlencode($playbackURL);
+$proxyURL = 'https://pruebitarender.onrender.com/proxy.php?url=' . urlencode($playbackURL);
 
 // Mostrar solo el <script> con la variable
 header("Content-Type: text/html; charset=UTF-8");
